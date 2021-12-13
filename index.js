@@ -1,40 +1,63 @@
-import React from 'react';
+import React, { PureComponent, useState } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
+  VrButton
 } from 'react-360';
+import { asset, NativeModules } from 'react-360';
+const { AudioModule } = NativeModules;
 
-export default class amanda_vr extends React.Component {
-  render() {
-    return (
-      <VideoPano source={{uri: 'assets/my-video.webm'}}>
-        <Sound source={{uri: 'sounds/waterfall.wav'}} />
-      </VideoPano>
-      
-    );
-  }
+function VrBase() {
+
+  const [playing, setPlaying] = useState(false)
+
+  return  <View style={styles.root}>
+      <Text style={[
+        styles.rootText,
+        {opacity: 1}
+      ]}>
+      </Text>
+      <VrButton
+        style={[
+          styles.rootButton,
+          {backgroundColor: "gray"}
+        ]}
+        onClick={() => {
+          // spatial audio
+          AudioModule.createAudio('Creek', {
+            source: asset('creek.wav'),
+            is3d: true
+          });
+
+          AudioModule.play('Creek', {
+            position: [0, -1, -2.5], // Position horn at truck in 3D space
+          });
+        }}
+      />
+    </View>;
 };
 
 const styles = StyleSheet.create({
-  panel: {
-    // Fill the entire surface
-    width: 1000,
-    height: 600,
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    justifyContent: 'center',
+  root: {
+    flexDirection: 'column',
+    width: 300,
+    height: 300,
     alignItems: 'center',
+    justifyContent: 'space-around'
   },
-  greetingBox: {
-    padding: 20,
-    backgroundColor: '#000000',
-    borderColor: '#639dda',
-    borderWidth: 2,
+  rootText: {
+    color: 'black',
+    fontSize: 60,
+    fontWeight: 'bold',
   },
-  greeting: {
-    fontSize: 30,
-  },
+  rootButton: {
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    borderWidth: 0,
+  }
 });
 
-AppRegistry.registerComponent('amanda_vr', () => amanda_vr);
+AppRegistry.registerComponent('VrBase', () => VrBase);
