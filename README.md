@@ -15,3 +15,11 @@ export NODE_OPTIONS=--openssl-legacy-provider
 
 Deploy the application: npm run deploy
 The application is hosted at this location: https://woak.github.io/vr-video-project/
+
+REACT 360 DOCS: https://github.com/facebookarchive/react-360/tree/master/docs
+
+For VR Video:
+https://github.com/facebookarchive/react-360/blob/master/docs/photos-and-videos.md
+
+Specifically... : 
+https://github.com/facebookarchive/react-360/blob/master/docs/photos-and-videos.md#video-uis

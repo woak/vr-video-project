@@ -9,19 +9,16 @@ function init(bundle, parent, options = {}) {
     ...options,
   });
 
-  // CAPSULE
-  const capsuleSurface = new Surface(
-    SIZE,
-    SIZE,
-    Surface.SurfaceShape.Flat,
-  );
-  capsuleSurface.setAngle(0, 0);
+  // Creating a Video Player
+  const player = r360.compositor.createVideoPlayer('FOREST_VIDEO');
+  player.setSource('forest.mp4', '3D');
+
   r360.renderToSurface(
-    r360.createRoot('VrBase', { name: 'Capsule' }),
-    capsuleSurface,
+    r360.createRoot('VrBase', {}),
+    r360.getDefaultSurface()
   );
 
-  r360.compositor.setBackground(r360.getAssetURL('3d_scene.jpg'));
+  r360.compositor.setBackgroundVideo('FOREST_VIDEO');
 }
 
 window.React360 = {init};
