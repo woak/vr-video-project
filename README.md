@@ -1,6 +1,10 @@
 # vr-video-project
 Personal vr video project
 
+NOTE: when cloning this project you will need to follow this step: 
+https://stackoverflow.com/questions/58268958/i-am-getting-invalid-regular-expression-error-while-running-npm-start
+Note that the fix is in metro-bundler not metro-config
+
 
 See tutorials: https://codeburst.io/react-360-by-example-part-1-c652443cfd8a
                 https://blog.logrocket.com/building-a-vr-app-with-react-360/

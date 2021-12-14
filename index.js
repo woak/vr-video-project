@@ -13,10 +13,9 @@ import {
 const { AudioModule } = NativeModules;
 
 const AUDIO_PLAYER_NAME = "FOREST_AUDIO";
-const AUDIO_SOURCE = "forestAudio.wav"
+const AUDIO_SOURCE = "creek.wav"
 
 const VIDEO_PLAYER_NAME = "FOREST_VIDEO";
-const VIDEO_SOURCE = "forestAudio.wav"
 
 export class VrBase extends React.Component {
 
@@ -28,38 +27,45 @@ export class VrBase extends React.Component {
     // spatial audio
     AudioModule.createAudio(AUDIO_PLAYER_NAME, {
       source: asset(AUDIO_SOURCE),
-      is3d: true
+      is3d: true,
+      autoPlay: false
     });
+    // Play a specific video
+    // Environment.setBackgroundVideo(VIDEO_PLAYER_NAME);
 
-    Environment.setBackgroundVideo(VIDEO_PLAYER_NAME);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    this.playing = !this.playing;
+    if (this.playing) {
+            
+      AudioModule.play(AUDIO_PLAYER_NAME, {
+        position: [0, -1, -2.5], // Position horn at truck in 3D space
+      });
+      // VideoModule.resume(VIDEO_PLAYER_NAME)
+    } else {
+      AudioModule.pause(AUDIO_PLAYER_NAME);
+      // VideoModule.pause(VIDEO_PLAYER_NAME);
+    }
+  
   }
 
   render() {
+
     return <View style={styles.root}>
       <Text style={[
         styles.rootText,
         { opacity: 1 }
       ]}>
-        {playing ? "Pause" : "Play"}
+        {this.playing ? "Pause" : "Play"}
       </Text>
       <VrButton
         style={[
           styles.rootButton,
-          { backgroundColor: "gray" }
+          { backgroundColor: "red" }
         ]}
-        onClick={() => {
-          if (this.playing) {
-            AudioModule.play(AUDIO_PLAYER_NAME, {
-              position: [0, -1, -2.5], // Position horn at truck in 3D space
-            });
-            VideoModule.resume(VIDEO_PLAYER_NAME);
-          } else {
-            AudioModule.pause(AUDIO_PLAYER_NAME);
-            VideoModule.pause(VIDEO_PLAYER_NAME);
-          }
-          this.playing = !this.playing;
-
-        }}
+        onClick={this.onClick}
       />
     </View >;
   }
